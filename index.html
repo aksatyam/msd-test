@@ -17,6 +17,11 @@
       var message = { action: 'msd_user_view_close', data: 'deeplink/universallink URI' };
       if (window.webkit) {
         /* Send an action = 'close' JSON object to Cordova via postMessage API */
+        console.log("1-"+typeof window.webkit === "undefined");
+        console.log("1-"+(!window.webkit));
+        console.log("1-"+(!window.webkit.messageHandlers));
+        console.log("1-"+(!window.webkit.messageHandlers.cordova_iab));
+
         if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) {
           console.warn('Cordova IAB postMessage API not found!');
           throw 'Cordova IAB postMessage API not found!';
