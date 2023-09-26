@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Haptik JS SDK Integration Demo</title>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width; initial-scale=1.0;" name="viewport" />
+</head>
+
+<body>
+  ...MSD Bot Demo...
+  <p id="demo"></p>
+  <script>
+    var query = findGetParameter('ssoid');
+    document.getElementById("demo").innerHTML = "  Powered by AI works. ssoid: " + query;
+    function postCordovaMessage() {
+      var message = { action: 'msd_user_view_close', data: 'deeplink/universallink URI' };
+      if (window.webkit) {
+        /* Send an action = 'close' JSON object to Cordova via postMessage API */
+        if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) {
+          console.warn('Cordova IAB postMessage API not found!');
+          throw 'Cordova IAB postMessage API not found!';
+        } else {
+          console.log('Message sent!');
+          webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
+        }
+      } else {
+        console.warn('Cordova IAB postMessage API not found!');
+        throw 'Cordova IAB postMessage API not found!';
+      }
+    }
+
+    window.haptikInitSettings = {
+      "business-id": "7021",
+      "client-id": "fa4b1156e008690649baafd96f842e7d5c4f0385",
+      "base-url": "https://staging.hellohaptik.com/",
+      "sdkEvents": event => {
+        console.log(JSON.stringify(event));
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if ((event.event_name == "HAPTIK_APP_MINIMIZED") && isMobile) {
+          // true for mobile device
+          console.log('You are using Mobile');
+          postCordovaMessage();
+        } else {
+          // false for not mobile device
+          console.log('You are using Desktop');
+        }
+      },
+    };
+    function findGetParameter(parameterName) {
+      var result = null,
+        tmp = [];
+      location.search
+        .substr(1)
+        .split("&")
+        .forEach(function (item) {
+          tmp = item.split("=");
+          if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+        });
+      return result;
+    }
+  </script>
+  <script type="text/javascript" charset="UTF-8"
+    src="https://toolassets.haptikapi.com/platform/javascript-xdk/production/loader.js"></script>
+
+  <script>
+    document.addEventListener('haptik_sdk', function () {
+      HaptikSDK.signup({
+        username: query
+      }, function (success, error, data) {
+        if (success) {
+          HaptikSDK.launchMessage("Business Performance", callbackFunction(), false);
+          function callbackFunction() {
+          }
+          console.log('SIGNUP REQUEST SUCCEEDED!', data);
+        } else {
+          console.log('ERROR:', error);
+        }
+      });
+    });
+  </script>
+
+</html>
