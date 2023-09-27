@@ -28,12 +28,30 @@
     function postCordovaMessage() {
       /* Send an action = 'close' JSON object to Cordova via postMessage API */
       var message = { action: 'msd_user_view_close' };
-      if (!webkit.messageHandlers.cordova_iab) {
-        console.warn('Cordova IAB postMessage API not found!');
-        throw 'Cordova IAB postMessage API not found!';
-      } else {
-        console.log('Message sent!');
-        webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
+      if (window.webkit) {
+
+        if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) { // eslint-disable-line
+
+          console.warn('Cordova IAB postMessage API not found!');
+
+          if (window && window.postMessage) {
+
+            window.postMessage(JSON.stringify(message));
+
+          } else {
+
+            console.log("no postMessage interface found!",)
+
+          }
+
+        } else {
+
+          console.log('Message sent!');
+
+          window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
+
+        }
+
       }
     }
 
