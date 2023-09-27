@@ -13,16 +13,28 @@
   <script>
     var query = findGetParameter('ssoid');
     document.getElementById("demo").innerHTML = "  Powered by AI works. ssoid: " + query;
+    // function postCordovaMessage() {
+    //   var message = { action: 'msd_user_view_close', data: 'deeplink/universallink URI' };
+    //   var msdWindow = window;
+    //   if (typeof msdWindow.webkit == "undefined" || !msdWindow.webkit || !msdWindow.webkit.messageHandlers || !msdWindow.webkit.messageHandlers.cordova_iab) {
+    //     console.warn('Cordova IAB postMessage API not found!');
+    //     // throw 'Cordova IAB postMessage API not found!';
+    //   } else {
+    //     console.log('Message sent!');
+    //     msdWindow.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
+    //   }
+    // }
+
     function postCordovaMessage() {
-      var message = { action: 'msd_user_view_close', data: 'deeplink/universallink URI' };
-      var msdWindow = window;
-        if (typeof msdWindow.webkit == "undefined" || !msdWindow.webkit || !msdWindow.webkit.messageHandlers || !msdWindow.webkit.messageHandlers.cordova_iab) {
-          console.warn('Cordova IAB postMessage API not found!');
-          // throw 'Cordova IAB postMessage API not found!';
-        } else {
-          console.log('Message sent!');
-          msdWindow.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
-        }
+      /* Send an action = 'close' JSON object to Cordova via postMessage API */
+      var message = { action: 'msd_user_view_close' };
+      if (!webkit.messageHandlers.cordova_iab) {
+        console.warn('Cordova IAB postMessage API not found!');
+        throw 'Cordova IAB postMessage API not found!';
+      } else {
+        console.log('Message sent!');
+        webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
+      }
     }
 
     window.haptikInitSettings = {
