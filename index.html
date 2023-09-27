@@ -28,34 +28,30 @@
     function postCordovaMessage() {
       /* Send an action = 'close' JSON object to Cordova via postMessage API */
       var message = { action: 'msd_user_view_close' };
-      if (typeof window.webkit !== "undefined") {
+      alert(window + window.webkit);
+      // if (typeof window.webkit !== "undefined") {
 
-        if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) { // eslint-disable-line
+      //   if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) { // eslint-disable-line
 
-          console.warn('Cordova IAB postMessage API not found!');
+      //     console.warn('Cordova IAB postMessage API not found!');
+      //     if (window && window.postMessage) {
+      //       window.postMessage(JSON.stringify(message));
+      //     } else {
+      //       console.log("no postMessage interface found!",)
+      //     }
 
-          if (window && window.postMessage) {
+      //   } else {
 
-            window.postMessage(JSON.stringify(message));
+      //     console.log('Message sent!');
 
-          } else {
+      //     window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
 
-            console.log("no postMessage interface found!",)
+      //   }
 
-          }
-
-        } else {
-
-          console.log('Message sent!');
-
-          window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
-
-        }
-
-      } else {
-        console.log(`Window in this phase`);
-        alert('Not Working');
-      }
+      // } else {
+      //   console.log(`Window in this phase`);
+      //   alert('Not Working');
+      // }
     }
 
     window.haptikInitSettings = {
