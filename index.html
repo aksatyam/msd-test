@@ -15,13 +15,7 @@
     document.getElementById("demo").innerHTML = "  Powered by AI works. ssoid: " + query;
     function postCordovaMessage() {
       var message = { action: 'msd_user_view_close', data: 'deeplink/universallink URI' };
-      // if (window) {
-        /* Send an action = 'close' JSON object to Cordova via postMessage API */
-        console.log("1-"+typeof window.webkit === "undefined");
-        console.log("1-"+(!window.webkit));
-        console.log("1-"+(!window.webkit.messageHandlers));
-        console.log("1-"+(!window.webkit.messageHandlers.cordova_iab));
-
+        let webkit = window.webkit;
         if (typeof webkit === "undefined" || !webkit || !webkit.messageHandlers || !webkit.messageHandlers.cordova_iab) {
           console.warn('Cordova IAB postMessage API not found!');
           throw 'Cordova IAB postMessage API not found!';
@@ -29,10 +23,6 @@
           console.log('Message sent!');
           webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
         }
-      // } else {
-      //   console.warn('Cordova IAB postMessage API not found!');
-      //   throw 'Cordova IAB postMessage API not found!';
-      // }
     }
 
     window.haptikInitSettings = {
