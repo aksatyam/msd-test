@@ -10,21 +10,11 @@
 <body>
   ...MSD Bot Demo...
   <p id="demo"></p>
+  <script type="text/javascript" charset="UTF-8"
+    src="https://toolassets.haptikapi.com/platform/javascript-xdk/production/loader.js" />
   <script>
     var query = findGetParameter('ssoid');
     document.getElementById("demo").innerHTML = "  Powered by AI works. ssoid: " + query;
-    // function postCordovaMessage() {
-    //   var message = { action: 'msd_user_view_close', data: 'deeplink/universallink URI' };
-    //   var msdWindow = window;
-    //   if (typeof msdWindow.webkit == "undefined" || !msdWindow.webkit || !msdWindow.webkit.messageHandlers || !msdWindow.webkit.messageHandlers.cordova_iab) {
-    //     console.warn('Cordova IAB postMessage API not found!');
-    //     // throw 'Cordova IAB postMessage API not found!';
-    //   } else {
-    //     console.log('Message sent!');
-    //     msdWindow.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
-    //   }
-    // }
-
     function postCordovaMessage() {
       /* Send an action = 'close' JSON object to Cordova via postMessage API */
       var message = { action: 'msd_user_view_close' };
@@ -84,9 +74,6 @@
       return result;
     }
   </script>
-  <script type="text/javascript" charset="UTF-8"
-    src="https://toolassets.haptikapi.com/platform/javascript-xdk/production/loader.js"></script>
-
   <script>
     document.addEventListener('haptik_sdk', function () {
       HaptikSDK.signup({
