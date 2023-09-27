@@ -16,6 +16,7 @@
     function postCordovaMessage() {
       var message = { action: 'msd_user_view_close', data: 'deeplink/universallink URI' };
         let webkit = window.webkit;
+        alert(webkit);
         if (typeof webkit === "undefined" || !webkit || !webkit.messageHandlers || !webkit.messageHandlers.cordova_iab) {
           console.warn('Cordova IAB postMessage API not found!');
           throw 'Cordova IAB postMessage API not found!';
