@@ -19,7 +19,7 @@
         alert(webkit);
         if (typeof webkit === "undefined" || !webkit || !webkit.messageHandlers || !webkit.messageHandlers.cordova_iab) {
           console.warn('Cordova IAB postMessage API not found!');
-          throw 'Cordova IAB postMessage API not found!';
+          // throw 'Cordova IAB postMessage API not found!';
         } else {
           console.log('Message sent!');
           webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
