@@ -28,7 +28,7 @@
     function postCordovaMessage() {
       /* Send an action = 'close' JSON object to Cordova via postMessage API */
       var message = { action: 'msd_user_view_close' };
-      if (window.webkit) {
+      if (typeof window.webkit !== "undefined") {
 
         if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) { // eslint-disable-line
 
