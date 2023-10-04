@@ -4,44 +4,30 @@
 <head>
   <title>Haptik JS SDK Integration Demo</title>
   <meta charset="UTF-8" />
-  <meta content="width=device-width,nitial-scale=1.0" name="viewport" />
+  <meta content="width=device-width; initial-scale=1.0;" name="viewport" />
 </head>
 
 <body>
   ...MSD Bot Demo...
   <p id="demo"></p>
-  <script type="text/javascript" charset="UTF-8"
-    src="https://toolassets.haptikapi.com/platform/javascript-xdk/production/loader.js" />
   <script>
+    // (window as any).webkit.messageHandlers.cordova_iab.postMessage(sendToNative);
     var query = findGetParameter('ssoid');
     document.getElementById("demo").innerHTML = "  Powered by AI works. ssoid: " + query;
     function postCordovaMessage() {
-      /* Send an action = 'close' JSON object to Cordova via postMessage API */
-      var message = { action: 'msd_user_view_close' };
-      alert(window + window.webkit);
-      // if (typeof window.webkit !== "undefined") {
-
-      //   if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) { // eslint-disable-line
-
-      //     console.warn('Cordova IAB postMessage API not found!');
-      //     if (window && window.postMessage) {
-      //       window.postMessage(JSON.stringify(message));
-      //     } else {
-      //       console.log("no postMessage interface found!",)
-      //     }
-
-      //   } else {
-
-      //     console.log('Message sent!');
-
-      //     window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
-
-      //   }
-
-      // } else {
-      //   console.log(`Window in this phase`);
-      //   alert('Not Working');
-      // }
+      const message = { action: 'msd_user_view_close' };
+      if (window.webkit) {
+        if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) {
+          console.warn('Cordova IAB postMessage API not found!');
+          throw 'Cordova IAB postMessage API not found!';
+        } else {
+          console.log('Message sent!');
+          window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
+        }
+      } else {
+        console.log('Message sent!');
+        window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
+      }
     }
 
     window.haptikInitSettings = {
@@ -53,7 +39,7 @@
         var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         if ((event.event_name == "HAPTIK_APP_MINIMIZED") && isMobile) {
           // true for mobile device
-          console.log('You are using Mobile Ashish');
+          console.log('You are using Mobile');
           postCordovaMessage();
         } else {
           // false for not mobile device
@@ -74,6 +60,9 @@
       return result;
     }
   </script>
+  <script type="text/javascript" charset="UTF-8"
+    src="https://toolassets.haptikapi.com/platform/javascript-xdk/production/loader.js"></script>
+
   <script>
     document.addEventListener('haptik_sdk', function () {
       HaptikSDK.signup({
