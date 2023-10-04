@@ -11,22 +11,22 @@
   ...MSD Bot Demo...
   <p id="demo"></p>
   <script>
-    // (window as any).webkit.messageHandlers.cordova_iab.postMessage(sendToNative);
     var query = findGetParameter('ssoid');
     document.getElementById("demo").innerHTML = "  Powered by AI works. ssoid: " + query;
     function postCordovaMessage() {
-      const message = { action: 'msd_user_view_close' };
+      var message = { action: 'msd_user_view_close', data: 'deeplink/universallink URI' };
       if (window.webkit) {
+        /* Send an action = 'close' JSON object to Cordova via postMessage API */
         if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) {
           console.warn('Cordova IAB postMessage API not found!');
           throw 'Cordova IAB postMessage API not found!';
         } else {
           console.log('Message sent!');
-          window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
+          webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
         }
       } else {
         console.log('Message sent!');
-        window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
+        webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
       }
     }
 
