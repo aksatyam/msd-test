@@ -15,18 +15,20 @@
     document.getElementById("demo").innerHTML = "(UAT Testing) Powered by AI works. ssoid: " + query;
     function postCordovaMessage() {
       var message = { action: 'msd_user_view_close' };
-      if (window.webkit) {
+      if (window && window.webkit) {
         /* Send an action = 'close' JSON object to Cordova via postMessage API */
         if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) {
           console.warn('Cordova IAB postMessage API not found!');
           throw 'Cordova IAB postMessage API not found!';
+        }
+        if (window && window.postMessage) {
+          window.postMessage(JSON.stringify(message));
         } else {
-          console.log('Message sent!');
-          window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
+          console.log("no postMessage interface found!",)
         }
       } else {
-        console.warn('Cordova IAB postMessage API not found!');
-        throw 'Cordova IAB postMessage API not found!';
+        console.log('Message sent!');
+        window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
       }
     }
 
