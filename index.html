@@ -22,14 +22,13 @@
           throw 'Cordova IAB postMessage API not found!';
         }
         if (window && window.postMessage) {
-          console.log("Working for android/ios");
+          console.log('Message sent! - '+'Working for android and ios');
           window.postMessage(JSON.stringify(message));
         } else {
           console.log("no postMessage interface found!",)
         }
       } else {
-        console.log('Message sent!');
-        console.log("Working for android/ios");
+        console.log('Message sent! - '+'Working for android and ios');
         window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
       }
     }
