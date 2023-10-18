@@ -8,20 +8,25 @@
 </head>
 
 <body>
-  MSD BOT DEV && UAT
+  ...MSD Bot Demo...
   <p id="demo"></p>
   <script>
     var query = findGetParameter('ssoid');
     document.getElementById("demo").innerHTML = "  Powered by AI works. ssoid: " + query;
     function postCordovaMessage() {
-      /* Send an action = 'close' JSON object to Cordova via postMessage API */
-      var message = { action: 'msd_user_view_close' };
-      if (window && typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) {
+      var message = { action: 'msd_user_view_close', data: 'deeplink/universallink URI' };
+      if (window.webkit) {
+        /* Send an action = 'close' JSON object to Cordova via postMessage API */
+        if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) {
+          console.warn('Cordova IAB postMessage API not found!');
+          throw 'Cordova IAB postMessage API not found!';
+        } else {
+          console.log('Message sent!');
+          webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
+        }
+      } else {
         console.warn('Cordova IAB postMessage API not found!');
         throw 'Cordova IAB postMessage API not found!';
-      } else {
-        console.log('Message sent!');
-        window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
       }
     }
 
@@ -35,7 +40,7 @@
         if ((event.event_name == "HAPTIK_APP_MINIMIZED") && isMobile) {
           // true for mobile device
           console.log('You are using Mobile');
-            postCordovaMessage();
+          postCordovaMessage();
         } else {
           // false for not mobile device
           console.log('You are using Desktop');
