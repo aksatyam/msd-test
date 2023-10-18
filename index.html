@@ -22,7 +22,7 @@
           throw 'Cordova IAB postMessage API not found!';
         } else {
           console.log('Message sent!');
-          webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
+          window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
         }
       } else {
         console.warn('Cordova IAB postMessage API not found!');
