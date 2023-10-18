@@ -8,27 +8,19 @@
 </head>
 
 <body>
-  ...MSD Bot Demo...
+  MSD BOT DEV && UAT
   <p id="demo"></p>
   <script>
     var query = findGetParameter('ssoid');
-    document.getElementById("demo").innerHTML = "(UAT Testing) Powered by AI works. ssoid: " + query;
+    document.getElementById("demo").innerHTML = "  Powered by AI works. ssoid: " + query;
     function postCordovaMessage() {
+      /* Send an action = 'close' JSON object to Cordova via postMessage API */
       var message = { action: 'msd_user_view_close' };
-      if (window && window.webkit) {
-        /* Send an action = 'close' JSON object to Cordova via postMessage API */
-        if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) {
-          console.warn('Cordova IAB postMessage API not found!');
-          throw 'Cordova IAB postMessage API not found!';
-        }
-        if (window && window.postMessage) {
-          console.log('Message sent! - '+'Working for android and ios');
-          window.postMessage(JSON.stringify(message));
-        } else {
-          console.log("no postMessage interface found!",)
-        }
+      if (window && typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) {
+        console.warn('Cordova IAB postMessage API not found!');
+        throw 'Cordova IAB postMessage API not found!';
       } else {
-        console.log('Message sent! - '+'Working for android and ios');
+        console.log('Message sent!');
         window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
       }
     }
@@ -43,7 +35,7 @@
         if ((event.event_name == "HAPTIK_APP_MINIMIZED") && isMobile) {
           // true for mobile device
           console.log('You are using Mobile');
-          postCordovaMessage();
+            postCordovaMessage();
         } else {
           // false for not mobile device
           console.log('You are using Desktop');
