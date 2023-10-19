@@ -8,25 +8,48 @@
 </head>
 
 <body>
-  ...MSD Bot Demo...
+  ...MSD Bot DEV/DEV...
   <p id="demo"></p>
   <script>
     var query = findGetParameter('ssoid');
     document.getElementById("demo").innerHTML = "  Powered by AI works. ssoid: " + query;
     function postCordovaMessage() {
-      var message = { action: 'msd_user_view_close'};
+      var message = { action: 'msd_user_view_close' };
+      // if (window.webkit) {
+      //   /* Send an action = 'close' JSON object to Cordova via postMessage API */
+      //   if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) {
+      //     console.warn('Cordova IAB postMessage API not found!');
+      //     throw 'Cordova IAB postMessage API not found!';
+      //   } else {
+      //     console.log('Message sent!');
+      //     window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
+      //   }
+      // } else {
+      //   console.warn('Cordova IAB postMessage API not found!');
+      //   throw 'Cordova IAB postMessage API not found!';
+      // }
       if (window.webkit) {
-        /* Send an action = 'close' JSON object to Cordova via postMessage API */
-        if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) {
+        if (typeof window.webkit === "undefined" || !window.webkit || !window.webkit.messageHandlers || !window.webkit.messageHandlers.cordova_iab) { // eslint-disable-line
           console.warn('Cordova IAB postMessage API not found!');
-          throw 'Cordova IAB postMessage API not found!';
-        } else {
+          if (window && window.postMessage) {
+            window.postMessage(JSON.stringify(message));
+          } else {
+            console.log("no postMessage interface found!",)
+          }
+        }
+        else {
           console.log('Message sent!');
           window.webkit.messageHandlers.cordova_iab.postMessage(JSON.stringify(message));
         }
       } else {
-        console.warn('Cordova IAB postMessage API not found!');
-        throw 'Cordova IAB postMessage API not found!';
+        console.log(window);
+        console.log(window.postMessage);
+        if (window && window.postMessage) {
+          window.postMessage(JSON.stringify(message));
+        } else {
+            console.warn('Cordova IAB postMessage API not found!');
+            throw 'Cordova IAB postMessage API not found!';
+        }
       }
     }
 
